@@ -13,10 +13,12 @@ Returns -2 for oher webclient exceptions
 
 ## Setup
 
-Open the config file, set your Zip Code (only danish zip codes supported).
+- Open the config file 
+
+- Set your country code
+
+- If country code is DK, set ZipCode to danish zipcode. Else write the GeonamesID of the city.
 
 ## Todo:
-
-- Implement other countries
 
 - Implement auto detection of zip code

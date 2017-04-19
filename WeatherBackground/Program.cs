@@ -12,7 +12,16 @@ namespace WeatherBackground
             
             int ZipCode = Int32.Parse(ConfigurationManager.AppSettings["ZipCode"]);
 
-            int result  = Wallpaper.Set(new Uri($"http://servlet.dmi.dk/byvejr/servlet/byvejr_dag1?by={ZipCode}&mode=long"), Wallpaper.Style.Centered);
+            int result = -3;
+
+            if (ConfigurationManager.AppSettings["CountryCode"] == "DK")
+            {
+                result = Wallpaper.Set(new Uri($"http://servlet.dmi.dk/byvejr/servlet/byvejr_dag1?by={ZipCode}&mode=long"),Wallpaper.Style.Centered);
+            }
+            else
+            {
+                result = Wallpaper.Set(new Uri($"http://servlet.dmi.dk/byvejr/servlet/world_image?city={ZipCode}&mode=dag1_2"), Wallpaper.Style.Centered);
+            }
 
             return result;
         }
