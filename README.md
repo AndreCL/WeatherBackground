@@ -11,13 +11,25 @@ Returns -1 when WebException (no connection to network)
 
 Returns -2 for oher webclient exceptions
 
-## Setup
+## Setup (simple)
+
+- Download built executable.zip
+
+- Unzip
 
 - Open the config file 
 
 - Set your country code
 
 - If country code is DK, set ZipCode to danish zipcode. Else write the GeonamesID of the city.
+
+- Run exe file
+
+## Setup (advanced)
+
+- You can use the source code to make your own build
+
+- You can set it to automatically update using task scheduler
 
 ## Todo:
 
