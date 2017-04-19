@@ -7,9 +7,16 @@ ATM you need to manually setup a task in task scheduler.
 
 Returns 0 when successful
 
-Returns -1 when no connection to DMI (for example no internet connection)
+Returns -1 when WebException (no connection to network)
 
-TODO:
+Returns -2 for oher webclient exceptions
 
-Which city not hardcoded (maybe use location or locale)
-Implement task scheduler
+## Setup
+
+Open the config file, set your Zip Code (only danish zip codes supported).
+
+## Todo:
+
+- Implement other countries
+
+- Implement auto detection of zip code

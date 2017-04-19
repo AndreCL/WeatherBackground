@@ -30,11 +30,15 @@ public sealed class Wallpaper
         {
             s = new WebClient().OpenRead(uri.ToString());
         }
-        catch (WebException) //if no internet connection
-        {
+        catch (WebException) //WebException
+        { 
             return -1;
         }
-        
+        catch (Exception)  //other webclient exceptions
+        {
+            return -2;
+        }
+
 
         System.Drawing.Image img = System.Drawing.Image.FromStream(s);
         string tempPath = Path.Combine(Path.GetTempPath(), "wallpaper.bmp");
