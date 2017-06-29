@@ -18,11 +18,27 @@ public sealed class Wallpaper
 
     public enum Style : int
     {
-        Tiled,
-        Centered,
-        Stretched,
-        Span
+        Tile,
+        Center,
+        Stretch,
+        Fit,
+        Fill
     }
+
+    /*
+     TileWallpaper
+        0: The wallpaper picture should not be tiled 
+        1: The wallpaper picture should be tiled 
+
+     WallpaperStyle
+        0:  The image is centered if TileWallpaper=0 or tiled if TileWallpaper=1
+        2:  The image is stretched to fill the screen
+        6:  The image is resized to fit the screen while maintaining the aspect 
+            ratio. (Windows 7 and later)
+        10: The image is resized and cropped to fill the screen while maintaining 
+            the aspect ratio. (Windows 7 and later)
+
+         */
 
     public static int Set(Uri uri, Style style)
     {
@@ -47,23 +63,29 @@ public sealed class Wallpaper
         img.Save(tempPath, System.Drawing.Imaging.ImageFormat.Bmp);
 
         RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
-        if (style == Style.Stretched) //not tested
-        {
-            key.SetValue(@"WallpaperStyle", 2.ToString());
-            key.SetValue(@"TileWallpaper", 0.ToString());
-        }
-
-        if (style == Style.Centered) //tested
-        {
-            key.SetValue(@"WallpaperStyle", 0.ToString());
-            key.SetValue(@"TileWallpaper", 0.ToString());
-        }
-
-        if (style == Style.Tiled) //not tested
-        {
-            key.SetValue(@"WallpaperStyle", 1.ToString());
-            key.SetValue(@"TileWallpaper", 1.ToString());
-        }
+        //switch (style)
+        //{
+        //    case Style.Tile:
+        //        key.SetValue(@"WallpaperStyle", "0");
+        //        key.SetValue(@"TileWallpaper", "1");
+        //        break;
+        //    case Style.Center:
+        //        key.SetValue(@"WallpaperStyle", "0");
+        //        key.SetValue(@"TileWallpaper", "0");
+        //        break;
+        //    case Style.Stretch:
+        //        key.SetValue(@"WallpaperStyle", "2");
+        //        key.SetValue(@"TileWallpaper", "0");
+        //        break;
+        //    case Style.Fit: // (Windows 7 and later)
+        //        key.SetValue(@"WallpaperStyle", "6");
+        //        key.SetValue(@"TileWallpaper", "0");
+        //        break;
+        //    case Style.Fill: // (Windows 7 and later)
+        //        key.SetValue(@"WallpaperStyle", "10");
+        //        key.SetValue(@"TileWallpaper", "0");
+        //        break;
+        //}
 
         SystemParametersInfo(SPI_SETDESKWALLPAPER,
             0,
@@ -79,22 +101,28 @@ public sealed class Wallpaper
         img.Save(tempPath, System.Drawing.Imaging.ImageFormat.Bmp);
 
         RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
-        if (style == Style.Stretched) //not tested
+        switch (style)
         {
-            key.SetValue(@"WallpaperStyle", 2.ToString());
-            key.SetValue(@"TileWallpaper", 0.ToString());
-        }
-
-        if (style == Style.Centered) //tested
-        {
-            key.SetValue(@"WallpaperStyle", 0.ToString());
-            key.SetValue(@"TileWallpaper", 0.ToString());
-        }
-
-        if (style == Style.Tiled) //not tested
-        {
-            key.SetValue(@"WallpaperStyle", 1.ToString());
-            key.SetValue(@"TileWallpaper", 1.ToString());
+            case Style.Tile:
+                key.SetValue(@"WallpaperStyle", "0");
+                key.SetValue(@"TileWallpaper", "1");
+                break;
+            case Style.Center:
+                key.SetValue(@"WallpaperStyle", "0");
+                key.SetValue(@"TileWallpaper", "0");
+                break;
+            case Style.Stretch:
+                key.SetValue(@"WallpaperStyle", "2");
+                key.SetValue(@"TileWallpaper", "0");
+                break;
+            case Style.Fit: // (Windows 7 and later)
+                key.SetValue(@"WallpaperStyle", "6");
+                key.SetValue(@"TileWallpaper", "0");
+                break;
+            case Style.Fill: // (Windows 7 and later)
+                key.SetValue(@"WallpaperStyle", "10");
+                key.SetValue(@"TileWallpaper", "0");
+                break;
         }
 
         SystemParametersInfo(SPI_SETDESKWALLPAPER,

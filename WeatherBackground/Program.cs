@@ -18,7 +18,7 @@ namespace WeatherBackground
 
             int result = -3;
 
-            Image backImg = Image.FromFile("background.jpg");
+            Image backImg = Image.FromFile("C:\\Users\\andre.lundin\\Desktop\\background weather\\background.jpg"); //full path otherwise not work with job scheduler
             Image mrkImg = null; //= Image.FromFile("watermark.png");
             Graphics g = Graphics.FromImage(backImg);
 
@@ -26,9 +26,7 @@ namespace WeatherBackground
             {
                 if (ConfigurationManager.AppSettings["CountryCode"] == "DK")
                 {
-                    //result = Wallpaper.Set(
-                    //    new Uri($"http://servlet.dmi.dk/byvejr/servlet/byvejr_dag1?by={ZipCode}&mode=long"),
-                    //    Wallpaper.Style.Centered);
+                    //result = Wallpaper.Set(new Uri($"http://servlet.dmi.dk/byvejr/servlet/byvejr_dag1?by={ZipCode}&mode=long"),Wallpaper.Style.Centered);
                     WebClient client = new WebClient();
                     Stream stream = client.OpenRead($"http://servlet.dmi.dk/byvejr/servlet/byvejr_dag1?by={ZipCode}&mode=long");
 
@@ -42,9 +40,7 @@ namespace WeatherBackground
                 }
                 else
                 {
-                    //result = Wallpaper.Set(
-                    //    new Uri($"http://servlet.dmi.dk/byvejr/servlet/world_image?city={ZipCode}&mode=dag1_2"),
-                    //    Wallpaper.Style.Centered);
+                    //result = Wallpaper.Set(new Uri($"http://servlet.dmi.dk/byvejr/servlet/world_image?city={ZipCode}&mode=dag1_2"),Wallpaper.Style.Centered);
                     WebClient client = new WebClient();
                     Stream stream = client.OpenRead($"http://servlet.dmi.dk/byvejr/servlet/world_image?city={ZipCode}&mode=dag1_2");
 
@@ -56,31 +52,18 @@ namespace WeatherBackground
                     }
                     client.Dispose();
                 }
-                g.DrawImage(mrkImg, backImg.Width-(mrkImg.Width/2) / 2, backImg.Height- (mrkImg.Height / 2) / 2);
-                Wallpaper.Set(backImg, Wallpaper.Style.Centered);
-                //backImg.Save("result.jpg");
+                g.DrawImage(mrkImg, backImg.Width / 2, backImg.Height  / 2);
+                Wallpaper.Set(backImg, Wallpaper.Style.Stretch);
+                //backImg.Save("C:\\Users\\andre.lundin\\Desktop\\result.jpg");
             }
             catch (Exception e)
             {
-                Wallpaper.Set(backImg, Wallpaper.Style.Centered);
+                Wallpaper.Set(backImg, Wallpaper.Style.Stretch);
+                Console.WriteLine(e.Message);
             }
            
 
             return result;
-        }
-
-        public static Bitmap SaveImage(string imageUrl)
-        {
-
-            WebClient client = new WebClient();
-            Stream stream = client.OpenRead(imageUrl);
-            Bitmap bitmap = new Bitmap(stream);
-
-            stream.Flush();
-            stream.Close();
-            client.Dispose();
-
-            return bitmap;
         }
     }
 }
